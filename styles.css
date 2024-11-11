@@ -15,6 +15,7 @@ body {
 
 .game-container {
     text-align: center;
+    position: relative; /* Para permitir o movimento do quadrado dentro dessa área */
 }
 
 #square {
@@ -22,6 +23,6 @@ body {
     height: 50px;
     background-color: #3498db;
     border-radius: 10px;
-    position: absolute;
+    position: absolute; /* Isso permite o movimento do quadrado na tela */
     cursor: pointer;
 }
