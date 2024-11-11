@@ -1,9 +1,9 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Configuração do jogo
+// Tamanho da grade para a cobrinha e a comida
 const grid = 20;
-let snake = [{ x: 9 * grid, y: 9 * grid }];  // Corpo inicial da cobra
+let snake = [{ x: 9 * grid, y: 9 * grid }];  // Corpo da cobrinha começando no centro
 let food = { x: 5 * grid, y: 5 * grid };    // Posição inicial da comida
 let dx = grid;  // Direção inicial (movimento para a direita)
 let dy = 0;
@@ -20,7 +20,7 @@ function draw() {
         return;
     }
 
-    // Limpar o canvas
+    // Limpar o canvas antes de redesenhar
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar a cobra
@@ -33,7 +33,7 @@ function draw() {
     ctx.fillStyle = 'red';
     ctx.fillRect(food.x, food.y, grid, grid);
 
-    // Atualizar a pontuação
+    // Exibir a pontuação
     ctx.fillStyle = 'black';
     ctx.font = '20px Arial';
     ctx.fillText(`Pontuação: ${score}`, 10, 20);
@@ -49,25 +49,25 @@ function move() {
         return;
     }
 
-    snake.unshift(head); // Adiciona a nova cabeça
+    snake.unshift(head);  // Adiciona a nova cabeça à frente
 
     // Verificar se comeu a comida
     if (head.x === food.x && head.y === food.y) {
         score += 10;
-        spawnFood();  // Gera nova comida
+        spawnFood();  // Gera uma nova comida
     } else {
         snake.pop();  // Remove a cauda da cobra
     }
 }
 
-// Função para verificar colisões com o corpo da cobra
+// Função para verificar se a cobra bateu em si mesma
 function checkCollision(head) {
     for (let i = 1; i < snake.length; i++) {
         if (snake[i].x === head.x && snake[i].y === head.y) {
-            return true;
+            return true; // A cobra bateu em si mesma
         }
     }
-    return false;
+    return false; // Não houve colisão
 }
 
 // Função para gerar a comida em uma nova posição aleatória
@@ -82,15 +82,15 @@ function spawnFood() {
 function changeDirection(e) {
     if (e.key === 'ArrowUp' && dy === 0) {
         dx = 0;
-        dy = -grid;
+        dy = -grid;  // Mover para cima
     } else if (e.key === 'ArrowDown' && dy === 0) {
         dx = 0;
-        dy = grid;
+        dy = grid;   // Mover para baixo
     } else if (e.key === 'ArrowLeft' && dx === 0) {
-        dx = -grid;
+        dx = -grid;  // Mover para a esquerda
         dy = 0;
     } else if (e.key === 'ArrowRight' && dx === 0) {
-        dx = grid;
+        dx = grid;   // Mover para a direita
         dy = 0;
     }
 }
